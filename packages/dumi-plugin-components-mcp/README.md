@@ -7,7 +7,23 @@
 
 `dumi-plugin-components-mcp` 是一个用于扩展 dumi 功能的插件，支持扫描组件文档并将其集成到 MCP（Model Context Protocol）服务器中。
 
-## 功能
+## 下载和配置
+
+```bash
+$ pnpm install dumi-plugin-components-mcp
+```
+
+在 `dumi` 配置文件中添加以下配置：
+
+```ts
+import { defineConfig } from "dumi";
+
+export default defineConfig({
+  plugins: ["dumi-plugin-components-mcp"],
+});
+```
+
+## 开发功能
 
 ### 1. 组件文档扫描
 
@@ -47,20 +63,6 @@ $ npm run build
 
 ```bash
 $ npx dumi scan-components
-```
-
-## 配置项
-
-在 `dumi` 配置文件中添加以下配置：
-
-```ts
-export default {
-  componentScanner: {
-    componentDir: "src/components", // 组件目录
-    docPattern: "index.md", // 文档文件模式
-    exclude: ["test"], // 排除的目录
-  },
-};
 ```
 
 ## LICENSE

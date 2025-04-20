@@ -8,8 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:core": "cd packages/core && npm run build",
     "start:core": "cd packages/core && npm start",
-    "build:plugin": "cd packages/dumi-plugin-components-mcp && npm run build",
-    "start:plugin": "cd packages/dumi-plugin-components-mcp && npm start",
+    "build:dumi": "cd packages/dumi-plugin-components-mcp && npm run build",
+    "start:dumi": "cd packages/dumi-plugin-components-mcp && npm start",
     "build:all": "npm run build:core && npm run build:plugin",
     "start:all": "npm run start:core && npm run start:plugin"
   },
