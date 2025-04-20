@@ -1,8 +1,8 @@
 {
-  "name": "@components-mcp/core",
+  "name": "@components-mcp-plugins/core",
   "version": "0.0.1",
   "description": "将自己的组件添加mcp服务",
-  "homepage": "https://github.com/mmdctjj/components-mcp",
+  "homepage": "https://github.com/mmdctjj/components-mcp-plugins",
   "main": "dist/cjs/index.js",
   "types": "dist/cjs/index.d.ts",
   "scripts": {
