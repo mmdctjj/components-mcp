@@ -1,0 +1,18 @@
+{
+  "name": "component_mcp_plugigs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:core": "cd packages/core && npm run build",
+    "start:core": "cd packages/core && npm start",
+    "build:plugin": "cd packages/dumi-plugin-components-mcp && npm run build",
+    "start:plugin": "cd packages/dumi-plugin-components-mcp && npm start",
+    "build:all": "npm run build:core && npm run build:plugin",
+    "start:all": "npm run start:core && npm run start:plugin"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
