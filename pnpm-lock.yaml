@@ -23,7 +23,7 @@ importers:
 
   packages/dumi-plugin-components-mcp:
     dependencies:
-      '@components-mcp/core':
+      '@components-mcp-plugins/core':
         specifier: workspace:^
         version: link:../core
       dumi:
@@ -33,6 +33,9 @@ importers:
       '@types/node':
         specifier: ^22.14.1
         version: 22.14.1
+      father:
+        specifier: ^4.5.3
+        version: 4.5.3(@babel/core@7.26.10)(@types/node@22.14.1)(styled-components@6.1.17)(webpack@5.99.6)
 
 packages:
 
@@ -6210,7 +6213,7 @@ packages:
     dependencies:
       array-union: 2.1.0
       dir-glob: 3.0.1
-      fast-glob: 3.2.12
+      fast-glob: 3.3.3
       ignore: 5.3.2
       merge2: 1.4.1
       slash: 3.0.0

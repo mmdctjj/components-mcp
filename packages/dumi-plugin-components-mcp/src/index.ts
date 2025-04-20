@@ -1,4 +1,4 @@
-import { createMcpServer, createSSEServer } from "@components-mcp/core";
+import { createMcpServer, createSSEServer } from "@components-mcp-plugins/core";
 import type { IApi } from "dumi";
 import fs from "fs";
 import path from "path";
@@ -11,9 +11,9 @@ interface ComponentDoc {
 }
 
 export default (api: IApi) => {
-  api.name = "dumi-plugin-components-mcp";
+  api.name = "@components-mcp-plugins/core";
   api.describe({
-    key: "dumi-plugin-components-mcp",
+    key: "@components-mcp-plugins/core",
     config: {
       schema(joi) {
         return joi.object({
