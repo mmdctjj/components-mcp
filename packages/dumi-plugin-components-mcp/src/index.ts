@@ -29,16 +29,7 @@ export default (api: IApi) => {
   api.registerCommand({
     name: "scan-components",
     description: "扫描组件文档",
-    fn: async () => {
-      const components = await scanComponentDocs(api);
-      console.log("扫描到的组件文档:");
-      components.forEach((comp) => {
-        console.log(`\n组件名称: ${comp.name}`);
-        console.log(`文档路径: ${comp.docPath}`);
-        console.log("文档内容开头:", comp.content.substring(0, 100) + "...");
-      });
-      return components;
-    },
+    fn: async () => await scanComponentDocs(api),
   });
 
   // 添加运行时变量
@@ -124,8 +115,9 @@ async function scanComponentDocs(api: IApi): Promise<ComponentDoc[]> {
     }
   }
 
-  createSSEServer(mcpServer);
+  const PORT = api.config.devServer?.port || 8002; // 获取宿主应用的端口，默认 8000
 
-  api.logger.info(`共扫描到 ${result.length} 个组件文档`);
+  createSSEServer(mcpServer, PORT);
+
   return result;
 }

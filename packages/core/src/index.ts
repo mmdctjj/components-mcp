@@ -10,7 +10,7 @@ const createMcpServer = () => {
   return mcpServer;
 };
 
-const createSSEServer = (mcpServer: McpServer) => {
+const createSSEServer = (mcpServer: McpServer, PORT: number) => {
   // 创建 HTTP server
   const server = createServer(async (req, res) => {
     const url = new URL(req.url ?? "", `http://${req.headers.host}`);
@@ -46,7 +46,6 @@ const createSSEServer = (mcpServer: McpServer) => {
     res.end("Not Found");
   });
   // 启动服务器
-  const PORT = 8002;
   server.listen(PORT, () => {
     console.log(`Mcp Server running on http://localhost:${PORT}`);
   });
