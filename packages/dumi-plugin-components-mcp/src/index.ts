@@ -72,7 +72,7 @@ async function scanComponentDocs(api: IApi): Promise<ComponentDoc[]> {
   const result: ComponentDoc[] = [];
 
   if (!fs.existsSync(componentsPath)) {
-    api.logger.warn(`组件目录不存在: ${componentsPath}`);
+    api.logger.warn(`component scanner not found: ${componentsPath}`);
     return result;
   }
 
@@ -82,7 +82,7 @@ async function scanComponentDocs(api: IApi): Promise<ComponentDoc[]> {
 
   const mcpServer = createMcpServer();
 
-  api.logger.info("开始扫描组件文档...", mcpServer);
+  api.logger.info("start mcp components scan...");
 
   for (const dir of componentDirs) {
     const componentPath = path.join(componentsPath, dir);
@@ -95,7 +95,13 @@ async function scanComponentDocs(api: IApi): Promise<ComponentDoc[]> {
       if (fs.existsSync(docPath)) {
         try {
           const content = fs.readFileSync(docPath, "utf-8");
-          api.logger.info("注册...", dir);
+          api.logger.info("register component tool:", dir);
+          result.push({
+            name: dir,
+            componentPath: componentPath,
+            docPath: docPath,
+            content: content,
+          });
           mcpServer.tool(dir, {}, async () => {
             return {
               content: [
@@ -107,17 +113,21 @@ async function scanComponentDocs(api: IApi): Promise<ComponentDoc[]> {
             };
           });
         } catch (e) {
-          api.logger.error(`读取文档失败: ${docPath}`, e);
+          api.logger.error(`read file error: ${docPath}`, e);
         }
       } else {
-        api.logger.info(`未找到文档: ${docPath}`);
+        api.logger.info(`not found doc: ${docPath}`);
       }
     }
   }
 
-  const PORT = api.config.devServer?.port || 8002; // 获取宿主应用的端口，默认 8000
+  const PORT = process.env.PORT || 3000; // 优先从环境变量获取端口
 
-  createSSEServer(mcpServer, PORT);
+  createSSEServer(mcpServer, Number(PORT) + 1);
+
+  api.logger.info(
+    `mcp components scan done!, success register ${result.length} component tools`
+  );
 
   return result;
 }
