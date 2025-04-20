@@ -10,7 +10,7 @@
 ## 下载和配置
 
 ```bash
-$ pnpm install dumi-plugin-components-mcp
+$ pnpm install @components-mcp/dumi-plugin
 ```
 
 在 `dumi` 配置文件中添加以下配置：
@@ -19,7 +19,7 @@ $ pnpm install dumi-plugin-components-mcp
 import { defineConfig } from "dumi";
 
 export default defineConfig({
-  plugins: ["dumi-plugin-components-mcp"],
+  plugins: ["@components-mcp/dumi-plugin"],
 });
 ```
 
