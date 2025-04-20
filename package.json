@@ -1,7 +1,8 @@
 {
-  "name": "component_mcp_plugigs",
+  "name": "component_mcp",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https://github.com/mmdctjj/components-mcp",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
