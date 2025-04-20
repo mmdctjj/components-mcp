@@ -51,9 +51,10 @@ const createSSEServer = (mcpServer: McpServer, PORT: number) => {
   });
 };
 
-export { createMcpServer, createSSEServer };
+export { createMcpServer, createSSEServer, SSEServerTransport };
 
 export default {
   createSSEServer,
   createMcpServer,
+  SSEServerTransport,
 };

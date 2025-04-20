@@ -1,6 +1,6 @@
 {
   "name": "@components-mcp-plugins/dumi-plugin",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "将自己的组件添加到mcp服务器",
   "homepage": "https://github.com/mmdctjj/components-mcp-plugins",
   "main": "dist/cjs/index.js",

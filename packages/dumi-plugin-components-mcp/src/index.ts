@@ -1,4 +1,7 @@
-import { createMcpServer, createSSEServer } from "@components-mcp-plugins/core";
+import {
+  createMcpServer,
+  SSEServerTransport,
+} from "@components-mcp-plugins/core";
 import type { IApi } from "dumi";
 import fs from "fs";
 import path from "path";
@@ -8,6 +11,8 @@ interface ComponentDoc {
   docPath: string;
   content: string;
 }
+
+const mcpServer = createMcpServer();
 
 export default (api: IApi) => {
   // 设置插件名称和配置key
@@ -56,6 +61,39 @@ export default (api: IApi) => {
       )};`,
     });
   });
+
+  // 👇 注册自定义 SSE 服务中间件
+  api.addMiddlewares(() => {
+    return async (req, res, next) => {
+      const url = new URL(req.url ?? "", `http://${req.headers.host}`);
+
+      if (req.method === "GET" && url.pathname === "/sse") {
+        const transport = new SSEServerTransport("/sse/post", res);
+        await mcpServer.connect(transport as any);
+
+        return;
+      }
+
+      if (req.method === "POST" && url.pathname === "/sse/post") {
+        let body = "";
+        req.on("data", (chunk) => (body += chunk));
+        req.on("end", async () => {
+          try {
+            const parsed = JSON.parse(body);
+            const transport = mcpServer["server"][
+              "_transport"
+            ] as SSEServerTransport;
+            await transport.handlePostMessage(req, res, parsed);
+          } catch (e) {
+            res.writeHead(400);
+            res.end("Invalid JSON");
+          }
+        });
+        return;
+      }
+      next();
+    };
+  });
 };
 
 /**
@@ -79,8 +117,6 @@ async function scanComponentDocs(api: IApi): Promise<ComponentDoc[]> {
   const componentDirs = fs
     .readdirSync(componentsPath)
     .filter((dir) => !exclude.includes(dir));
-
-  const mcpServer = createMcpServer();
 
   api.logger.info("start mcp components scan...");
 
@@ -120,10 +156,6 @@ async function scanComponentDocs(api: IApi): Promise<ComponentDoc[]> {
       }
     }
   }
-
-  const PORT = process.env.PORT || 3000; // 优先从环境变量获取端口
-
-  createSSEServer(mcpServer, Number(PORT) + 1);
 
   api.logger.info(
     `mcp components scan done!, success register ${result.length} component tools`
